@@ -1,6 +1,6 @@
 # Shai-Hulud v2 NPM Supply Chain Attack - Detection & Cleanup Tools
 
-Complete toolkit for detecting and safely remediating systems infected with the Shai-Hulud v2 malware discovered by GitLab Security Research in November 2024.
+Complete toolkit for detecting and safely remediating systems infected with the Shai-Hulud v2 malware discovered by GitLab Security Research in November 2025.
 
 ## CRITICAL WARNING
 
