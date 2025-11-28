@@ -1,0 +1,123 @@
+{
+  "name": "Shai-Hulud v2 NPM Supply Chain Attack IoCs",
+  "date": "2025-11-24",
+  "source": "https://about.gitlab.com/blog/gitlab-discovers-widespread-npm-supply-chain-attack/",
+  "indicators": {
+    "files": [
+      {
+        "name": "bun_environment.js",
+        "description": "Malicious post-install script in node_modules directories",
+        "location": "node_modules/**/bun_environment.js",
+        "size_approx": "10MB",
+        "type": "obfuscated payload"
+      },
+      {
+        "name": "setup_bun.js",
+        "description": "Malicious preinstall loader script",
+        "location": "node_modules/**/setup_bun.js",
+        "type": "loader script"
+      },
+      {
+        "name": ".truffler-cache/trufflehog",
+        "description": "Downloaded Trufflehog binary (Linux/Mac)",
+        "location": "~/.truffler-cache/trufflehog",
+        "type": "credential harvesting tool"
+      },
+      {
+        "name": ".truffler-cache/trufflehog.exe",
+        "description": "Downloaded Trufflehog binary (Windows)",
+        "location": "~/.truffler-cache/trufflehog.exe",
+        "type": "credential harvesting tool"
+      }
+    ],
+    "directories": [
+      {
+        "name": ".truffler-cache",
+        "description": "Hidden directory created in user home for Trufflehog binary storage",
+        "location": "~/.truffler-cache"
+      },
+      {
+        "name": ".truffler-cache/extract",
+        "description": "Temporary directory used for binary extraction",
+        "location": "~/.truffler-cache/extract"
+      }
+    ],
+    "package_indicators": [
+      {
+        "field": "scripts.preinstall",
+        "pattern": "node setup_bun.js",
+        "description": "Malicious preinstall script hook"
+      },
+      {
+        "field": "scripts.preinstall",
+        "pattern": "setup_bun\\.js",
+        "description": "Reference to malicious loader"
+      }
+    ],
+    "github_markers": [
+      {
+        "marker": "Sha1-Hulud: The Second Coming.",
+        "description": "Repository description used to identify exfiltration dropboxes",
+        "location": "GitHub repository descriptions"
+      }
+    ],
+    "commands": [
+      {
+        "command": "curl -fsSL https://bun.sh/install | bash",
+        "description": "Suspicious Bun installation during NPM package install",
+        "platform": "Linux/Mac"
+      },
+      {
+        "command": "powershell -c \"irm bun.sh/install.ps1|iex\"",
+        "description": "Windows Bun installation via PowerShell",
+        "platform": "Windows"
+      }
+    ],
+    "destructive_payloads": [
+      {
+        "command": "del /F /Q /S \"%USERPROFILE%*\"",
+        "description": "Windows destructive payload command",
+        "platform": "Windows",
+        "type": "file deletion"
+      },
+      {
+        "command": "shred -uvz -n 1",
+        "description": "Linux/Mac destructive payload command",
+        "platform": "Linux/Mac",
+        "type": "secure file deletion"
+      },
+      {
+        "command": "cipher /W:%USERPROFILE%",
+        "description": "Windows secure deletion command in payload",
+        "platform": "Windows",
+        "type": "data overwrite"
+      }
+    ],
+    "behavioral_indicators": [
+      "Environment variable scanning for tokens (ghp_, gho_, NPM_TOKEN)",
+      "GitHub CLI configuration file access",
+      "AWS/GCP/Azure SDK credential enumeration",
+      ".npmrc file access",
+      "Creation of public GitHub repos with specific marker",
+      "GitHub Actions runner installation",
+      "Automatic package republishing with version increment",
+      "Trufflehog execution for filesystem scanning",
+      "Monitoring of GitHub and npm API access",
+      "Dead man's switch activation on loss of API access"
+    ],
+    "credential_targets": [
+      "GitHub tokens (ghp_, gho_)",
+      "npm tokens (NPM_TOKEN, .npmrc)",
+      "AWS credentials (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, ~/.aws/)",
+      "GCP credentials (GOOGLE_APPLICATION_CREDENTIALS, ~/.config/gcloud/)",
+      "Azure credentials (AZURE_SUBSCRIPTION_ID, ~/.azure/)",
+      "API keys in environment variables",
+      "Passwords in git history",
+      "Secrets in configuration files"
+    ]
+  },
+  "remediation_notes": {
+    "critical_warning": "DO NOT bulk revoke GitHub/npm tokens or delete exfiltration repos without careful coordination. The dead man's switch mechanism will trigger data destruction on infected systems if they lose access to both GitHub and npm simultaneously.",
+    "safe_approach": "Remediate individual systems before revoking credentials. Remove malicious files, restore clean package versions, then rotate credentials."
+  }
+}
