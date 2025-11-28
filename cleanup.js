@@ -412,8 +412,8 @@ async function credentialRotationInstructions() {
   log('   → These are data exfiltration dropboxes', 'cyan');
   console.log();
   
-  log('⚠️  DO NOT proceed with token revocation until cleanup is complete!', 'red');
-  log('⚠️  Revoking tokens prematurely may trigger the dead man\'s switch!', 'red');
+  log('   DO NOT proceed with token revocation until cleanup is complete!', 'red');
+  log('   Revoking tokens prematurely may trigger the dead man\'s switch!', 'red');
   
   await confirm('\nPress Enter to acknowledge these instructions...');
 }
