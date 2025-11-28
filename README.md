@@ -385,3 +385,4 @@ If you need help:
 **Last Updated**: November 28, 2025  
 **IoC Database Version**: 24-11-2025  
 **Source**: GitLab Security Research
+# NPM-sha1hulud-detection
