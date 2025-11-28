@@ -4,7 +4,7 @@
  * Shai-Hulud v2 NPM Supply Chain Attack Detector
  * 
  * This tool scans for indicators of compromise (IoCs) related to the
- * widespread npm supply chain attack discovered by GitLab in November 2024.
+ * widespread npm supply chain attack discovered by GitLab in November 2025.
  * 
  * CRITICAL WARNING: This malware contains a "dead man's switch" that will
  * destroy user data if it loses access to both GitHub and npm simultaneously.
@@ -433,7 +433,7 @@ function main() {
   console.clear();
   log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'cyan');
   log('  Shai-Hulud v2 Malware Detector', 'bright');
-  log('  GitLab Security Research | Nov 2024', 'cyan');
+  log('  GitLab Security Research | Nov 2025', 'cyan');
   log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n', 'cyan');
   
   log('[!] WARNING: Dead man\'s switch present - do NOT revoke tokens before cleanup\n', 'yellow');
